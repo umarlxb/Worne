@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORNE — Imported Shoes. Real Quality.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pitch: #1C1B18;
+    --dusk: #3A3830;
+    --ash: #888780;
+    --linen: #D3D1C7;
+    --chalk: #F4F1EA;
+    --worn: #C4A882;
+    --white: #FFFFFF;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-sans: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--chalk);
+    color: var(--pitch);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--chalk);
+    border-bottom: 0.5px solid var(--linen);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 56px;
+  }
+  .nav-logo {
+    font-family: var(--font-serif);
+    font-size: 22px; font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--pitch);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 28px; align-items: center; }
+  .nav-links a {
+    font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ash);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--pitch); }
+  .nav-wa {
+    background: var(--pitch); color: var(--chalk);
+    padding: 8px 16px; border-radius: 2px;
+    font-size: 12px; letter-spacing: 0.08em;
+    text-decoration: none; text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .nav-wa:hover { background: var(--dusk); color: var(--chalk); }
+  .nav-burger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+  .nav-burger span { display: block; width: 22px; height: 1px; background: var(--pitch); }
+  .mobile-menu {
+    display: none; position: fixed; top: 56px; left: 0; right: 0;
+    background: var(--chalk); border-bottom: 0.5px solid var(--linen);
+    padding: 24px; z-index: 99; flex-direction: column; gap: 20px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--pitch); text-decoration: none;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; padding-top: 56px;
+    background: var(--pitch);
+    display: flex; flex-direction: column;
+    justify-content: flex-end;
+    position: relative; overflow: hidden;
+  }
+  .hero-texture {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 80%, rgba(196,168,130,0.08) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 20%, rgba(196,168,130,0.05) 0%, transparent 40%);
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 80px 40px 60px;
+    max-width: 900px;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--worn); margin-bottom: 32px;
+    border: 0.5px solid rgba(196,168,130,0.3);
+    padding: 6px 14px;
+  }
+  .hero-headline {
+    font-family: var(--font-serif);
+    font-size: clamp(52px, 10vw, 110px);
+    font-weight: 400; line-height: 0.9;
+    color: var(--chalk);
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+  .hero-headline em { font-style: italic; color: var(--worn); }
+  .hero-sub {
+    font-size: 16px; color: var(--ash);
+    max-width: 460px; line-height: 1.7;
+    margin-bottom: 40px;
+  }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--chalk); color: var(--pitch);
+    padding: 14px 32px; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; border: none;
+    cursor: pointer; transition: background 0.2s;
+    font-family: var(--font-sans); font-weight: 500;
+  }
+  .btn-primary:hover { background: var(--linen); }
+  .btn-outline {
+    background: transparent; color: var(--chalk);
+    padding: 14px 32px; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; border: 0.5px solid rgba(244,241,234,0.3);
+    cursor: pointer; transition: border-color 0.2s;
+    font-family: var(--font-sans); font-weight: 400;
+  }
+  .btn-outline:hover { border-color: var(--chalk); }
+  .hero-bottom {
+    position: relative; z-index: 2;
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center;
+    padding: 20px 40px; gap: 40px;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-num {
+    font-family: var(--font-serif); font-size: 28px;
+    color: var(--chalk); letter-spacing: 0.04em; display: block;
+  }
+  .hero-stat-lbl {
+    font-size: 11px; color: var(--ash);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .hero-divider { width: 0.5px; height: 32px; background: rgba(255,255,255,0.12); }
+
+  /* ── TRUST BAR ── */
+  .trust-bar {
+    background: var(--pitch);
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+    padding: 16px 40px;
+    display: flex; align-items: center;
+    justify-content: center; gap: 48px;
+    flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--ash);
+  }
+  .trust-icon {
+    width: 20px; height: 20px;
+    background: rgba(196,168,130,0.15);
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center;
+    font-size: 10px; color: var(--worn);
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 80px 40px; }
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--ash);
+    margin-bottom: 48px; display: block;
+  }
+  .section-label::before {
+    content: ''; display: inline-block;
+    width: 20px; height: 0.5px;
+    background: var(--worn); vertical-align: middle;
+    margin-right: 12px;
+  }
+
+  /* ── PRODUCTS ── */
+  .products-section { background: var(--chalk); }
+  .products-header {
+    display: flex; align-items: flex-end;
+    justify-content: space-between; margin-bottom: 40px;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .products-title {
+    font-family: var(--font-serif);
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 400; letter-spacing: 0.02em;
+    line-height: 1.05;
+  }
+  .view-all {
+    font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--ash);
+    text-decoration: none; border-bottom: 0.5px solid var(--linen);
+    padding-bottom: 2px; transition: color 0.2s, border-color 0.2s;
+    white-space: nowrap;
+  }
+  .view-all:hover { color: var(--pitch); border-color: var(--pitch); }
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2px;
+  }
+  .product-card {
+    background: var(--white);
+    cursor: pointer; position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+  }
+  .product-card:hover { transform: translateY(-2px); }
+  .product-card:hover .product-img-wrap::after { opacity: 1; }
+  .product-img-wrap {
+    aspect-ratio: 3/4;
+    background: var(--linen);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .product-img-wrap::after {
+    content: 'View Details';
+    position: absolute; inset: 0;
+    background: rgba(28,27,24,0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--chalk); opacity: 0; transition: opacity 0.3s;
+  }
+  .product-placeholder {
+    font-family: var(--font-serif);
+    font-size: 48px; color: var(--ash);
+    letter-spacing: 0.1em; opacity: 0.4;
+  }
+  .product-badge {
+    position: absolute; top: 12px; left: 12px;
+    background: var(--pitch); color: var(--chalk);
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.1em; padding: 4px 10px;
+    text-transform: uppercase;
+  }
+  .product-badge.sale { background: var(--worn); color: var(--pitch); }
+  .product-info { padding: 16px 20px 20px; }
+  .product-name {
+    font-size: 14px; font-weight: 500;
+    letter-spacing: 0.04em; color: var(--pitch);
+    margin-bottom: 4px;
+  }
+  .product-meta {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--ash); letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .product-price-row { display: flex; align-items: center; gap: 10px; }
+  .product-price {
+    font-family: var(--font-serif); font-size: 20px;
+    font-weight: 500; color: var(--pitch);
+  }
+  .product-old-price {
+    font-size: 13px; color: var(--ash);
+    text-decoration: line-through;
+  }
+  .product-save {
+    font-size: 11px; color: #2d7a50;
+    letter-spacing: 0.04em;
+  }
+  .product-order-btn {
+    width: 100%; margin-top: 14px;
+    background: var(--pitch); color: var(--chalk);
+    border: none; padding: 12px;
+    font-family: var(--font-sans); font-size: 12px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .product-order-btn:hover { background: var(--dusk); }
+
+  /* ── WHY US ── */
+  .why-section { background: var(--pitch); }
+  .why-section .section-label { color: var(--ash); }
+  .why-section .section-label::before { background: var(--worn); }
+  .why-title {
+    font-family: var(--font-serif);
+    font-size: clamp(32px, 5vw, 52px);
+    color: var(--chalk); font-weight: 400;
+    line-height: 1.1; margin-bottom: 56px;
+    max-width: 480px;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0; border: 0.5px solid rgba(255,255,255,0.08);
+  }
+  .why-card {
+    padding: 36px 28px;
+    border: 0.5px solid rgba(255,255,255,0.06);
+  }
+  .why-num {
+    font-family: var(--font-serif); font-size: 48px;
+    color: rgba(196,168,130,0.2); font-weight: 400;
+    line-height: 1; margin-bottom: 20px; display: block;
+  }
+  .why-card-title {
+    font-size: 15px; font-weight: 500;
+    color: var(--chalk); letter-spacing: 0.04em;
+    margin-bottom: 10px;
+  }
+  .why-card-desc {
+    font-size: 13px; color: var(--ash); line-height: 1.7;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .how-section { background: var(--chalk); }
+  .how-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 40px; margin-top: 0;
+  }
+  .how-step { position: relative; }
+  .how-step::after {
+    content: '→';
+    position: absolute; top: 8px; right: -24px;
+    color: var(--linen); font-size: 18px;
+  }
+  .how-step:last-child::after { display: none; }
+  .how-step-num {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--worn); letter-spacing: 0.1em;
+    margin-bottom: 16px; display: block;
+  }
+  .how-step-title {
+    font-size: 16px; font-weight: 500;
+    color: var(--pitch); margin-bottom: 8px;
+  }
+  .how-step-desc { font-size: 13px; color: var(--ash); line-height: 1.65; }
+
+  /* ── REVIEWS ── */
+  .reviews-section { background: var(--dusk); }
+  .reviews-section .section-label { color: var(--ash); }
+  .reviews-section .section-label::before { background: var(--worn); }
+  .reviews-title {
+    font-family: var(--font-serif);
+    font-size: clamp(28px, 4vw, 44px);
+    color: var(--chalk); font-weight: 400;
+    margin-bottom: 48px;
+  }
+  .review-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+  }
+  .review-card {
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    padding: 28px 24px;
+  }
+  .review-stars { color: var(--worn); font-size: 14px; margin-bottom: 16px; }
+  .review-text {
+    font-size: 14px; color: var(--linen);
+    line-height: 1.75; margin-bottom: 20px;
+    font-style: italic;
+  }
+  .review-author { display: flex; align-items: center; gap: 12px; }
+  .review-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--ash); display: flex;
+    align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 500; color: var(--chalk);
+  }
+  .review-name { font-size: 13px; font-weight: 500; color: var(--chalk); }
+  .review-city { font-size: 11px; color: var(--ash); margin-top: 1px; }
+
+  /* ── COD SECTION ── */
+  .cod-section {
+    background: var(--worn);
+    padding: 60px 40px;
+    display: flex; align-items: center;
+    gap: 60px; flex-wrap: wrap;
+  }
+  .cod-left { flex: 1; min-width: 240px; }
+  .cod-tag {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: rgba(28,27,24,0.5); margin-bottom: 16px; display: block;
+  }
+  .cod-title {
+    font-family: var(--font-serif); font-size: clamp(32px, 5vw, 52px);
+    font-weight: 400; color: var(--pitch);
+    line-height: 1.05; margin-bottom: 20px;
+  }
+  .cod-desc { font-size: 15px; color: var(--dusk); line-height: 1.7; max-width: 420px; }
+  .cod-right { flex: 1; min-width: 240px; }
+  .cod-steps { display: flex; flex-direction: column; gap: 20px; }
+  .cod-step { display: flex; align-items: flex-start; gap: 16px; }
+  .cod-step-num {
+    width: 28px; height: 28px; min-width: 28px;
+    border-radius: 50%; background: rgba(28,27,24,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--pitch);
+  }
+  .cod-step-text { font-size: 14px; color: var(--pitch); line-height: 1.6; }
+
+  /* ── FAQ ── */
+  .faq-section { background: var(--chalk); }
+  .faq-title {
+    font-family: var(--font-serif);
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 400; margin-bottom: 48px;
+  }
+  .faq-list { max-width: 700px; }
+  .faq-item {
+    border-top: 0.5px solid var(--linen);
+    padding: 20px 0;
+    cursor: pointer;
+  }
+  .faq-item:last-child { border-bottom: 0.5px solid var(--linen); }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 15px; font-weight: 500; color: var(--pitch);
+    letter-spacing: 0.02em;
+  }
+  .faq-toggle {
+    width: 24px; height: 24px; min-width: 24px;
+    border: 0.5px solid var(--linen); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--ash); transition: transform 0.3s;
+  }
+  .faq-item.open .faq-toggle { transform: rotate(45deg); }
+  .faq-a {
+    font-size: 14px; color: var(--ash); line-height: 1.75;
+    max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s;
+    padding-top: 0;
+  }
+  .faq-item.open .faq-a { max-height: 200px; padding-top: 14px; }
+
+  /* ── CTA BANNER ── */
+  .cta-section {
+    background: var(--pitch); text-align: center;
+    padding: 100px 40px;
+  }
+  .cta-title {
+    font-family: var(--font-serif);
+    font-size: clamp(42px, 8vw, 88px);
+    color: var(--chalk); font-weight: 400;
+    letter-spacing: -0.01em; line-height: 0.95;
+    margin-bottom: 32px;
+  }
+  .cta-title em { color: var(--worn); font-style: italic; }
+  .cta-sub { font-size: 16px; color: var(--ash); margin-bottom: 40px; }
+  .cta-buttons { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .btn-wa {
+    background: #25D366; color: var(--white);
+    padding: 16px 36px; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none; font-family: var(--font-sans);
+    font-weight: 500; transition: background 0.2s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .btn-wa:hover { background: #20b558; }
+  .btn-wa svg { width: 18px; height: 18px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--pitch);
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    padding: 40px 40px 24px;
+  }
+  .footer-top {
+    display: flex; justify-content: space-between;
+    align-items: flex-start; flex-wrap: wrap; gap: 32px;
+    margin-bottom: 40px;
+  }
+  .footer-logo {
+    font-family: var(--font-serif); font-size: 28px;
+    letter-spacing: 0.16em; color: var(--chalk);
+    font-weight: 400;
+  }
+  .footer-tagline { font-size: 13px; color: var(--ash); margin-top: 8px; }
+  .footer-links { display: flex; gap: 48px; flex-wrap: wrap; }
+  .footer-col h4 {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ash); margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block; font-size: 13px; color: rgba(244,241,234,0.5);
+    text-decoration: none; margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--chalk); }
+  .footer-bottom {
+    border-top: 0.5px solid rgba(255,255,255,0.06);
+    padding-top: 20px;
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 12px;
+  }
+  .footer-copy { font-size: 12px; color: var(--ash); }
+  .footer-policy { display: flex; gap: 20px; }
+  .footer-policy a {
+    font-size: 12px; color: var(--ash); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-policy a:hover { color: var(--chalk); }
+
+  /* ── WHATSAPP FLOAT ── */
+  .wa-float {
+    position: fixed; bottom: 24px; right: 24px; z-index: 99;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: #25D366; display: flex; align-items: center;
+    justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+    text-decoration: none; transition: transform 0.2s;
+  }
+  .wa-float:hover { transform: scale(1.08); }
+  .wa-float svg { width: 26px; height: 26px; fill: white; }
+  .wa-tooltip {
+    position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
+    background: var(--pitch); color: var(--chalk);
+    font-size: 12px; white-space: nowrap;
+    padding: 6px 12px; border-radius: 2px;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s;
+  }
+  .wa-float:hover .wa-tooltip { opacity: 1; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 200;
+    background: rgba(28,27,24,0.85);
+    align-items: center; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--chalk); max-width: 480px; width: 90%;
+    padding: 36px; position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: none; border: none; cursor: pointer;
+    font-size: 20px; color: var(--ash);
+  }
+  .modal-tag {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--worn); margin-bottom: 8px; display: block;
+  }
+  .modal-name {
+    font-family: var(--font-serif); font-size: 24px;
+    margin-bottom: 4px;
+  }
+  .modal-price-row { display: flex; align-items: center; gap: 12px; margin: 16px 0; }
+  .modal-price { font-family: var(--font-serif); font-size: 28px; color: var(--pitch); }
+  .modal-old { font-size: 14px; color: var(--ash); text-decoration: line-through; }
+  .modal-features { margin: 20px 0; }
+  .modal-features li {
+    font-size: 14px; color: var(--dusk);
+    padding: 6px 0; border-bottom: 0.5px solid var(--linen);
+    list-style: none; display: flex; align-items: center; gap: 8px;
+  }
+  .modal-features li::before { content: '—'; color: var(--worn); }
+  .modal-stock {
+    font-size: 12px; color: #c0392b;
+    letter-spacing: 0.06em; margin: 16px 0 20px;
+  }
+  .modal-wa-btn {
+    width: 100%; background: var(--pitch); color: var(--chalk);
+    border: none; padding: 14px;
+    font-family: var(--font-sans); font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .modal-wa-btn:hover { background: var(--dusk); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .nav-burger { display: flex; }
+    .hero-content { padding: 60px 24px 40px; }
+    .hero-bottom { padding: 20px 24px; gap: 24px; }
+    section { padding: 60px 24px; }
+    .trust-bar { padding: 16px 24px; gap: 24px; }
+    .cod-section { padding: 48px 24px; }
+    .cta-section { padding: 72px 24px; }
+    footer { padding: 40px 24px 24px; }
+    .footer-links { gap: 32px; }
+    .how-step::after { display: none; }
+    .product-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.7s ease forwards; }
+  .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .delay-2 { animation-delay: 0.25s; opacity: 0; }
+  .delay-3 { animation-delay: 0.4s; opacity: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">WORNE</a>
+  <div class="nav-links">
+    <a href="#products">Shop</a>
+    <a href="#about">About</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+    <a href="https://wa.me/923001234567?text=Hi%20Worne!%20Order%20karna%20hai" class="nav-wa" target="_blank">WhatsApp Order</a>
+  </div>
+  <div class="nav-burger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#products" onclick="toggleMenu()">Shop</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+  <a href="https://wa.me/923001234567?text=Hi%20Worne!%20Order%20karna%20hai" target="_blank" style="color: #25D366;">WhatsApp pe Order Karo →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-texture"></div>
+  <div class="hero-content">
+    <div class="hero-tag fade-up">Karachi — Ships Everywhere · Cash on Delivery</div>
+    <h1 class="hero-headline fade-up delay-1">
+      Style<br>Karo.<br><em>Budget</em><br>Mat Todo.
+    </h1>
+    <p class="hero-sub fade-up delay-2">
+      Imported shoes — real quality, Pakistan mein best price pe. Pehle dekho, pasand aaye toh pay karo.
+    </p>
+    <div class="hero-ctas fade-up delay-3">
+      <a href="#products" class="btn-primary">Collection Dekho</a>
+      <a href="https://wa.me/923001234567?text=Hi%20Worne!%20Order%20karna%20hai" class="btn-outline" target="_blank">WhatsApp pe Poochho</a>
+    </div>
+  </div>
+  <div class="hero-bottom">
+    <div class="hero-stat">
+      <span class="hero-stat-num">5,000+</span>
+      <span class="hero-stat-lbl">Happy Customers</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">3–5</span>
+      <span class="hero-stat-lbl">Din mein Delivery</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">100%</span>
+      <span class="hero-stat-lbl">COD Available</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-item"><div class="trust-icon">✓</div>Cash on Delivery — Puri Pakistan</div>
+  <div class="trust-item"><div class="trust-icon">↩</div>7 Din Easy Exchange</div>
+  <div class="trust-item"><div class="trust-icon">★</div>Real Imported Quality</div>
+  <div class="trust-item"><div class="trust-icon">⚡</div>Karachi Same Day Possible</div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <span class="section-label">Current Drop</span>
+  <div class="products-header">
+    <h2 class="products-title">Imported<br>Collection</h2>
+    <a href="#" class="view-all">All Products →</a>
+  </div>
+  <div class="product-grid">
+
+    <div class="product-card" onclick="openModal('Running Pro X', 'Rs. 4,200', 'Rs. 5,500', 'REF 0041 · SIZE 40–45', ['Imported lightweight mesh upper', 'Anti-slip rubber sole', 'Memory foam insole', 'Colors: Black / White / Grey', 'Sizes: 40, 41, 42, 43, 44, 45'])">
+      <div class="product-img-wrap">
+        <span class="product-placeholder">W</span>
+        <div class="product-badge">New Arrival</div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Running Pro X</div>
+        <div class="product-meta">REF 0041 · SIZE 40–45</div>
+        <div class="product-price-row">
+          <span class="product-price">Rs. 4,200</span>
+          <span class="product-old-price">Rs. 5,500</span>
+          <span class="product-save">Save Rs. 1,300</span>
+        </div>
+        <button class="product-order-btn">Order Karo — COD</button>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="openModal('Classic Formal', 'Rs. 3,800', 'Rs. 5,000', 'REF 0042 · SIZE 40–45', ['Genuine imported leather upper', 'Formal + semi-formal ready', 'Cushioned insole for all-day wear', 'Colors: Black / Brown', 'Sizes: 40–45'])">
+      <div class="product-img-wrap">
+        <span class="product-placeholder">W</span>
+        <div class="product-badge sale">Hot Seller</div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Classic Formal</div>
+        <div class="product-meta">REF 0042 · SIZE 40–45</div>
+        <div class="product-price-row">
+          <span class="product-price">Rs. 3,800</span>
+          <span class="product-old-price">Rs. 5,000</span>
+          <span class="product-save">Save Rs. 1,200</span>
+        </div>
+        <button class="product-order-btn">Order Karo — COD</button>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="openModal('Street Sneaker', 'Rs. 3,200', 'Rs. 4,500', 'REF 0043 · SIZE 40–44', ['Imported canvas + rubber sole', 'Streetwear-ready silhouette', 'Lightweight — daily use perfect', 'Colors: White / Off-White / Black', 'Sizes: 40–44'])">
+      <div class="product-img-wrap">
+        <span class="product-placeholder">W</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Street Sneaker</div>
+        <div class="product-meta">REF 0043 · SIZE 40–44</div>
+        <div class="product-price-row">
+          <span class="product-price">Rs. 3,200</span>
+          <span class="product-old-price">Rs. 4,500</span>
+          <span class="product-save">Save Rs. 1,300</span>
+        </div>
+        <button class="product-order-btn">Order Karo — COD</button>
+      </div>
+    </div>
+
+    <div class="product-card" onclick="openModal('Sport Trainer', 'Rs. 5,500', 'Rs. 7,500', 'REF 0044 · SIZE 40–45', ['High-performance imported build', 'Gym + outdoor ready', 'Breathable mesh + reinforced toe', 'Colors: Navy / Red / Black', 'Sizes: 40–45'])">
+      <div class="product-img-wrap">
+        <span class="product-placeholder">W</span>
+        <div class="product-badge">Premium</div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Sport Trainer</div>
+        <div class="product-meta">REF 0044 · SIZE 40–45</div>
+        <div class="product-price-row">
+          <span class="product-price">Rs. 5,500</span>
+          <span class="product-old-price">Rs. 7,500</span>
+          <span class="product-save">Save Rs. 2,000</span>
+        </div>
+        <button class="product-order-btn">Order Karo — COD</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY WORNE -->
+<section class="why-section" id="about">
+  <span class="section-label">Kyun Worne?</span>
+  <h2 class="why-title">Pakistan ka Pehla Bharosamand Imported Shoe Brand.</h2>
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-num">01</span>
+      <div class="why-card-title">Real Imported Quality</div>
+      <div class="why-card-desc">Har pair personally quality-check hota hai dispatch se pehle. Koi fake, koi compromise nahi.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-num">02</span>
+      <div class="why-card-title">Cash on Delivery</div>
+      <div class="why-card-desc">Advance dene ki zaroorat nahi. Ghar pe aayega, apne haath mein dekho, phir pay karo.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-num">03</span>
+      <div class="why-card-title">Best Price Guarantee</div>
+      <div class="why-card-desc">Market se 20–40% sasta — kyunke hum directly import karte hain. Beech mein koi nahi.</div>
+    </div>
+    <div class="why-card">
+      <span class="why-num">04</span>
+      <div class="why-card-title">Easy Exchange</div>
+      <div class="why-card-desc">Size issue? 7 din ke andar exchange karo. Sirf WhatsApp karo — hum sambhal lein ge.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <span class="section-label">Kaise Order Karein</span>
+  <div class="how-steps">
+    <div class="how-step">
+      <span class="how-step-num">01 —</span>
+      <div class="how-step-title">Product Chunno</div>
+      <div class="how-step-desc">Website pe collection dekho ya WhatsApp pe photo mangwao.</div>
+    </div>
+    <div class="how-step">
+      <span class="how-step-num">02 —</span>
+      <div class="how-step-title">WhatsApp pe Order Karo</div>
+      <div class="how-step-desc">Naam, address, size, aur COD confirm karo. 24 ghante mein reply guaranteed.</div>
+    </div>
+    <div class="how-step">
+      <span class="how-step-num">03 —</span>
+      <div class="how-step-title">Delivery Wait Karo</div>
+      <div class="how-step-desc">3–5 din mein ghar pe. Karachi mein same-day bhi possible hai.</div>
+    </div>
+    <div class="how-step">
+      <span class="how-step-num">04 —</span>
+      <div class="how-step-title">Dekho, Phir Pay Karo</div>
+      <div class="how-step-desc">Delivery pe shoes dekho, pasand aayi toh cash do. No risk at all.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COD SECTION -->
+<div class="cod-section">
+  <div class="cod-left">
+    <span class="cod-tag">Pakistan mein sabse bada masla — solve ho gaya</span>
+    <h2 class="cod-title">Cash on Delivery — Har Jagah, Har Waqt.</h2>
+    <p class="cod-desc">Online shopping mein trust ka masla? Worne mein aapko pehle pay karne ki zaroorat hi nahi. Parcel ghar aaye, kholo, check karo — phir decide karo.</p>
+  </div>
+  <div class="cod-right">
+    <div class="cod-steps">
+      <div class="cod-step"><div class="cod-step-num">1</div><div class="cod-step-text">Order karo — koi advance payment nahi</div></div>
+      <div class="cod-step"><div class="cod-step-num">2</div><div class="cod-step-text">3–5 din mein courier ghar aayega</div></div>
+      <div class="cod-step"><div class="cod-step-num">3</div><div class="cod-step-text">Parcel apne haath mein kholo, check karo</div></div>
+      <div class="cod-step"><div class="cod-step-num">4</div><div class="cod-step-text">Pasand aayi? Cash do aur enjoy karo!</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<section class="reviews-section">
+  <span class="section-label">Real Customers, Real Reviews</span>
+  <h2 class="reviews-title">5,000+ log Worne<br>choose kar chuke hain.</h2>
+  <div class="review-grid">
+    <div class="review-card">
+      <div class="review-stars">★ ★ ★ ★ ★</div>
+      <p class="review-text">"Yaar, honestly soch raha tha fake nikalengi — but quality dekh ke dang reh gaya. Original se koi farq nahi aur price aadha. Definitely reorder karunga."</p>
+      <div class="review-author">
+        <div class="review-avatar">AK</div>
+        <div>
+          <div class="review-name">Ahmed K.</div>
+          <div class="review-city">Karachi · Running Pro X</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★ ★ ★ ★ ★</div>
+      <p class="review-text">"COD tha isliye order kiya — socha risk nahi. But jab parcel aaya toh seriously impressed. Packaging bhi acha, shoes bilkul expected se better. Worne is legit."</p>
+      <div class="review-author">
+        <div class="review-avatar">MF</div>
+        <div>
+          <div class="review-name">M. Farhan</div>
+          <div class="review-city">Lahore · Classic Formal</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★ ★ ★ ★ ★</div>
+      <p class="review-text">"3 din mein Islamabad pahunch gaya order. Size perfect, quality acha. Inke saath WhatsApp pe baat karna bhi easy tha — 20 minute mein reply aaya."</p>
+      <div class="review-author">
+        <div class="review-avatar">SA</div>
+        <div>
+          <div class="review-name">Sami A.</div>
+          <div class="review-city">Islamabad · Street Sneaker</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <span class="section-label">Common Sawalaat</span>
+  <h2 class="faq-title">FAQ</h2>
+  <div class="faq-list">
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Kya yeh shoes original hain?<div class="faq-toggle">+</div></div>
+      <div class="faq-a">Haan — hum directly import karte hain aur har batch quality-check hota hai. Proof video bhi dekhte hain customers request pe.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">COD kaise kaam karta hai?<div class="faq-toggle">+</div></div>
+      <div class="faq-a">Koi advance nahi. Order karo, 3–5 din mein courier aayega. Parcel kholo, check karo, pasand aaye toh cash do. Bilkul simple.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Size galat nikla toh kya hoga?<div class="faq-toggle">+</div></div>
+      <div class="faq-a">7 din ke andar WhatsApp karo. Packaging intact ho toh free exchange ho ga. Return pe zyada tension nahi — hum handle karte hain.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Delivery kitne din mein hoti hai?<div class="faq-toggle">+</div></div>
+      <div class="faq-a">Karachi mein same day ya next day possible hai. Baaki Pakistan mein 3–5 working days. Order ke baad tracking info WhatsApp pe bhej dete hain.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">Kya Lahore / Islamabad mein bhi deliver karte ho?<div class="faq-toggle">+</div></div>
+      <div class="faq-a">Bilkul — puri Pakistan mein deliver karte hain. TCS, BlueEx, Leopards through. Karachi fastest, baaki cities 3–5 din.</div>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <div class="faq-q">WhatsApp se order karna safe hai?<div class="faq-toggle">+</div></div>
+      <div class="faq-a">Haan — COD hai isliye risk zero hai aapka. 5000+ log already WhatsApp se order kar chuke hain. Hum verified hain, reviews dekh sakte ho.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="cta-section" id="contact">
+  <h2 class="cta-title">Abhi Order<br>Karo.<br><em>COD Available.</em></h2>
+  <p class="cta-sub">Pehle pay karne ki zaroorat nahi — ghar pe aaye, dekho, phir decide karo.</p>
+  <div class="cta-buttons">
+    <a href="https://wa.me/923001234567?text=Hi%20Worne!%20Shoes%20order%20karna%20chahta%20hun.%20Collection%20dikhaein?" class="btn-wa" target="_blank">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp pe Order Karo
+    </a>
+    <a href="#products" class="btn-outline">Collection Dobara Dekho</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">WORNE</div>
+      <div class="footer-tagline">Imported Shoes. Real Quality. Pakistan Price.</div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <a href="#products">Sneakers</a>
+        <a href="#products">Formal Shoes</a>
+        <a href="#products">Sports Shoes</a>
+        <a href="#products">New Arrivals</a>
+      </div>
+      <div class="footer-col">
+        <h4>Info</h4>
+        <a href="#about">About Worne</a>
+        <a href="#faq">FAQ</a>
+        <a href="#">Return Policy</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="https://wa.me/923001234567" target="_blank">WhatsApp</a>
+        <a href="#">Instagram</a>
+        <a href="#">TikTok</a>
+        <a href="#">Facebook</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 Worne. All rights reserved. Karachi, Pakistan.</div>
+    <div class="footer-policy">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+      <a href="#">Return Policy</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/923001234567?text=Hi%20Worne!%20Order%20karna%20hai" target="_blank">
+  <span class="wa-tooltip">Order Karo</span>
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <span class="modal-tag" id="modalRef">REF 0041</span>
+    <div class="modal-name" id="modalName">Running Pro X</div>
+    <div class="modal-price-row">
+      <span class="modal-price" id="modalPrice">Rs. 4,200</span>
+      <span class="modal-old" id="modalOld">Rs. 5,500</span>
+    </div>
+    <ul class="modal-features" id="modalFeatures"></ul>
+    <div class="modal-stock">🔴 Sirf 4 pairs bacha hain — abhi order karo</div>
+    <button class="modal-wa-btn" id="modalWaBtn">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp pe Order Karo
+    </button>
+  </div>
+</div>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  function toggleFaq(el) {
+    const wasOpen = el.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) el.classList.add('open');
+  }
+
+  function openModal(name, price, oldPrice, ref, features) {
+    document.getElementById('modalName').textContent = name;
+    document.getElementById('modalPrice').textContent = price;
+    document.getElementById('modalOld').textContent = oldPrice;
+    document.getElementById('modalRef').textContent = ref;
+    const ul = document.getElementById('modalFeatures');
+    ul.innerHTML = '';
+    features.forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = f;
+      ul.appendChild(li);
+    });
+    const msg = encodeURIComponent(`Hi Worne! ${name} order karna hai (${price}). COD chahiye.`);
+    document.getElementById('modalWaBtn').onclick = () => window.open(`https://wa.me/923001234567?text=${msg}`, '_blank');
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  // Close mobile menu on scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('mobileMenu').classList.remove('open');
+  });
+</script>
+</body>
+</html>
